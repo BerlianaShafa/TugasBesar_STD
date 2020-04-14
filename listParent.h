@@ -17,9 +17,9 @@ struct infoParent
     int umurPenyewa;
 };
 
-typedef struct elmlistParent *Parent;
+typedef struct elmlistParent *addressParent;
 
-struct elmlistChild
+struct elmlistParent
 {
     infoParent info;
     addressParent next;
@@ -31,7 +31,7 @@ struct listParent
 };
 
 void createListParent(listParent &L);
-addressChild allocateParent(infoParent x);
+addressParent allocateParent(infoParent x);
 void insertFirstParent(listParent &L, addressParent P);
 void insertAfterParent(listParent &L, addressParent prec, addressParent P);
 void insertLastParent(listParent &L, addressParent P);

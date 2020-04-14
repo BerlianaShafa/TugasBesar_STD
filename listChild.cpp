@@ -1,49 +1,95 @@
-#ifndef LISTCHILD_H_INCLUDED
-#define LISTCHILD_H_INCLUDED
-#include <iostream>
-#define next(P) P->next
-#define prev(P) P->prev
-#define info(P) P->info
-#define firstChild(L) L.firstChild
+#include "listChild.h"
 
-// Double Circular
+void createListChild(listChild &L){
+    firstChild(L) = NULL;
+}
 
-using namespace std;
+addressChild allocateChild(infoChild x){
+    addressChild P = NULL;
 
-struct infoChild
-{
-    int idCustomer;
-    string jenisBusana;
-    string ukuranBusana;
-    int jumlahBusana;
-};
+    P = new elmlistChild;
+    info(P).idCustomer = x.idCustomer;
+    info(P).jenisBusana = x.jenisBusana;
+    info(P).ukuranBusana = x.ukuranBusana;
+    info(P).jumlahBusana = x.jumlahBusana;
+    next(P)=NULL;
+    prev(P)=NULL;
 
-typedef struct elmlistChild *addressChild;
+    return P;
+}
 
-struct elmlistChild
-{
-    infoChild info;
-    addressChild next;
-    addressChild prev;
-};
+void insertFirstChild(listChild &L, addressChild P){
+    if(firstChild(L) == NULL){
+        firstChild(L) = P;
+        next(P) = P;
+        prev(P) = P;
+    } else {
+        next(P) = firstChild(L);
+        prev(P) = prev(firstChild(L));
+        next(prev(firstChild(L))) = P;
+        prev(firstChild(L)) = P;
+        firstChild(L) = P;
+    }
+}
 
-struct listChild
-{
-    addressChild firstChild;
-};
+void insertAfterChild(listChild &L, addressChild prec, addressChild P){
+    next(P)=next(prec);
+    prev(next(P))=P;
+    next(prec)=P;
+    prev(next(prec))=prec;
+}
 
-void createListChild(listChild &L);
-addressChild allocateChild(infochild x);
-void insertFirstChild(listChild &L, addressChild P);
-void insertAfterChild(listChild &L, addressChild prec, addressChild P);
-void insertLastChild(listChild &L, addressChild P);
-void deleteFirstChild(listChild &L, addressChild &P);
-void deleteAfterChild(listChild &L, addressChild prec, addressChild &P);
-void deleteLastChild(listChild &L, addressChild &P);
-void printinfoChild(listChild L);
-addressChild searchElmChild(listChild &L, int noCust);
+void insertLastChild(listChild &L, addressChild P){
+    if(firstChild(L) == NULL){
+        insertFirstChild(L, P);
+    } else {
+        next(P) = firstChild(L);
+        prev(P) = prev(firstChild(L));
+        next(prev(firstChild(L))) = P;
+        prev(firstChild(L)) = P;
+    }
+}
 
-#endif // LISTCHILD_H_INCLUDED
+void deleteFirstChild(listChild &L, addressChild &P){
+
+}
+
+void deleteAfterChild(listChild &L, addressChild prec, addressChild &P){
+    P = next(prec);
+    if(next(prec) == first(L)){
+        deleteLast(L, P);
+    } else if (next(prec) == prec){
+        next(P) = NULL;
+        prev(P) = NULL;
+        next(prec) = prec;
+        prev(prec) = prec;
+    } else {
+        next(prec) = next(P);
+        prev(next(P)) = prec;
+        next(P) = NULL;
+        prev(P) = NULL;
+    }
+}
+
+void deleteLastChild(listChild &L, addressChild &P){
+
+}
+
+void printinfoChild(listChild L){
+
+}
+
+addressChild searchElmChild(listChild &L, int noCust){
+    addressChild P = NULL;
+
+    while(next(P)!=firstChild(L) && info(P).idCustomer!=noCust.idCustomer){
+        P=next(P);
+    }
+ 
+    return P;
+}
+
+
 
 
 

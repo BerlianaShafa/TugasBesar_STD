@@ -1,48 +1,71 @@
-#ifndef LISTPARENT_H_INCLUDED
-#define LISTPARENT_H_INCLUDED
-#include <iostream>
-#define next(P) P->next
-#define info(P) P->info
-#define firstParent(L) L.firstParent
+#include "listParent.h"
 
-//Single linked list
+void createListParent(listParent &L){
+    firstParent(L) = NULL;
+}
 
-using namespace std;
+addressParent allocateParent(infoParent x){
+    addressParent P = NULL;
+  
+    P = new elmlistParent;
+    info(P).idPenyewa = x.idPenyewa;
+    info(P).alamatPenyewa = x.alamatPenyewa;
+    info(P).namaPenyewa = x.namaPenyewa;
+    info(P).umurPenyewa = x.umurPenyewa;
+    next(P) = NULL;
+    prev(P) = NULL;
 
-struct infoParent
-{
-    int idPenyewa;
-    string alamatPenyewa;
-    string namaPenyewa;
-    int umurPenyewa;
-};
+    return P;
+}
 
-typedef struct elmlistParent *Parent;
+void insertFirstParent(listParent &L, addressParent P){
+    if(firstParent(L) == NULL){
+        firstParent(L) = P;
+        next(P) = P;
+        prev(P) = P;
+    } else {
+        next(P) = firstParent(L);
+        prev(P) = prev(firstParent(L));
+        next(prev(firstParent(L))) = P;
+        prev(firstParent(L)) = P;
+        firstParent(L) = P;
+    }
+}
 
-struct elmlistChild
-{
-    infoParent info;
-    addressParent next;
-};
+void insertAfterParent(listParent &L, addressParent prec, addressParent P){
+    next(P)=next(prec);
+    prev(next(P))=P;
+    next(prec)=P;
+    prev(next(prec))=prec;
+}
 
-struct listParent
-{
-    addressParent firstParent;
-};
+void insertLastParent(listParent &L, addressParent P){
+    if(firstParent(L) == NULL){
+        insertFirstParent(L, P);
+    } else {
+        next(P) = firstParent(L);
+        prev(P) = prev(firstParent(L));
+        next(prev(firstParent(L))) = P;
+        prev(firstParent(L)) = P;
+    }
+}
 
-void createListParent(listParent &L);
-addressChild allocateParent(infoParent x);
-void insertFirstParent(listParent &L, addressParent P);
-void insertAfterParent(listParent &L, addressParent prec, addressParent P);
-void insertLastParent(listParent &L, addressParent P);
-void deleteFirstParent(listParent &L, addressParent &P);
-void deleteAfterParent(listParent &L, addressParent prec, addressParent &P);
-void deleteLastParent(listParent &L, addressParent &P);
-void printinfoParent(listParent L);
-addressParent searchElmParent(listParent &L, string ID);
+void deleteFirstParent(listParent &L, addressParent &P){
 
+}
 
+void deleteAfterParent(listParent &L, addressParent prec, addressParent &P){
 
+}
 
-#endif // LISTPARENT_H_INCLUDED
+void deleteLastParent(listParent &L, addressParent &P){
 
+}
+
+void printinfoParent(listParent L){
+
+}
+
+addressParent searchElmParent(listParent &L, string ID){
+
+}

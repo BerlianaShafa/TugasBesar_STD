@@ -4,6 +4,7 @@
 #define next(P) P->next
 #define prev(P) P->prev
 #define info(P) P->info
+#define next(prec) prec->next
 #define firstChild(L) L.firstChild
 
 // Double Circular
@@ -33,7 +34,7 @@ struct listChild
 };
 
 void createListChild(listChild &L);
-addressChild allocateChild(infochild x);
+addressChild allocateChild(infoChild x);
 void insertFirstChild(listChild &L, addressChild P);
 void insertAfterChild(listChild &L, addressChild prec, addressChild P);
 void insertLastChild(listChild &L, addressChild P);
