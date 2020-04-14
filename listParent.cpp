@@ -13,59 +13,90 @@ addressParent allocateParent(infoParent x){
     info(P).namaPenyewa = x.namaPenyewa;
     info(P).umurPenyewa = x.umurPenyewa;
     next(P) = NULL;
-    prev(P) = NULL;
 
     return P;
 }
 
 void insertFirstParent(listParent &L, addressParent P){
-    if(firstParent(L) == NULL){
-        firstParent(L) = P;
-        next(P) = P;
-        prev(P) = P;
-    } else {
-        next(P) = firstParent(L);
-        prev(P) = prev(firstParent(L));
-        next(prev(firstParent(L))) = P;
-        prev(firstParent(L)) = P;
-        firstParent(L) = P;
+    if(firstParent(L)!=NULL){
+        next(P)=firstParent(L);
     }
+    firstParent(L)=P;
 }
 
 void insertAfterParent(listParent &L, addressParent prec, addressParent P){
-    next(P)=next(prec);
-    prev(next(P))=P;
+    if (next(prec)!=NULL){
+        next(P)=next(prec);
+    }
     next(prec)=P;
-    prev(next(prec))=prec;
 }
 
 void insertLastParent(listParent &L, addressParent P){
-    if(firstParent(L) == NULL){
-        insertFirstParent(L, P);
-    } else {
-        next(P) = firstParent(L);
-        prev(P) = prev(firstParent(L));
-        next(prev(firstParent(L))) = P;
-        prev(firstParent(L)) = P;
+   addressParent prec;
+
+    prec=first(L);
+    if (first(L)== NULL){
+        insertFirstParent(L,P);
+    }else {
+        while (next(prec) != NULL){
+            prec=next(prec);
+        }
+        insertAfterParent(L,prec,P);
     }
 }
 
 void deleteFirstParent(listParent &L, addressParent &P){
-
+    P=firstParent(L);
+    if (next(P) != NULL){
+        firstParent(L)=next(P);
+    } else {
+        firstParent(L)=NULL;
+    }
 }
 
 void deleteAfterParent(listParent &L, addressParent prec, addressParent &P){
-
+    P=next(prec);
+    if (next(P)!=NULL){
+        next(prec)=next(P);
+    } else{
+        next(prec)=NULL;
+    }
 }
 
 void deleteLastParent(listParent &L, addressParent &P){
+    addressParent prec;
 
+    prec=firstParent(L);
+    if (next(prec)== NULL){
+        firstParent(L) = NULL;
+    } else {
+        while (next(next(prec)) != NULL){
+               prec=next(prec);
+        }
+        P = next(prec);
+        next(prec) = NULL;
+    }
 }
 
 void printinfoParent(listParent L){
+    addressParent P;
 
+    P = firstParent(L);
+    while(P!=NULL){
+        cout<<info(P)<<", ";
+        P=next(P);
+    }
+    cout<<endl;
 }
 
 addressParent searchElmParent(listParent &L, string ID){
-
+    infoParent x;
+    addressParent P;
+    
+    P=firstParent(L);
+    while(P!=NULL && info(P)!=ID){
+        P=next(P);
+    }
+    
+    return P;
 }
